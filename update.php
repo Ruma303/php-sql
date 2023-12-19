@@ -1,54 +1,56 @@
 <?php
 
-//% Recuperare e mostrare un singolo utente
+//% Aggiornare un singolo utente
 
-require './connect.php';
-$user = null;
+    require './connect.php';
+    $id = 1;
 
-if (isset($_GET['id'])) {
-    $id = (int)$_GET['id'];
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nome = $_POST['nome'] ?? '';
+        $cognome = $_POST['cognome'] ?? '';
+        $email = $_POST['email'] ?? '';
 
-    try {
-        $sql = "UPDATE utenti SET nome = :Gianluca WHERE condizione = :condizione;";
-        $stmt = $conn->prepare($sql);
+        try {
+            //? Preparazione query SQL di aggiornamento
+            $sql = "UPDATE utenti SET nome = :nome, cognome = :cognome, email = :email WHERE id = :id";
 
-        // Sostituisci 'nuovo_valore' e 'condizione' con i valori o le condizioni specifiche
-        $stmt->bindParam(':nuovo_valore', $nuovoValore);
-        $stmt->bindParam(':condizione', $condizione);
+            $stmt = $conn->prepare($sql);
 
-        $stmt->execute();
-        echo "Record aggiornato con successo.";
-    } catch(PDOException $e) {
-        echo "Errore nell'aggiornamento dei dati: " . $e->getMessage();
-    }
-}
+            //? Associazione dei valori ai parametri
+            $stmt->bindParam(':nome', $nome);
+            $stmt->bindParam(':cognome', $cognome);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-?>
+            $stmt->execute();
+            echo "<p>Utente aggiornato con successo!</p>";
+
+        } catch (PDOException $e) {
+            echo "Errore nell'aggiornamento dell'utente: " . $e->getMessage();
+        }
+    }?>
 
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ricerca Utente</title>
+    <title>Aggiorna Utente</title>
 </head>
 <body>
-    <h1>Ricerca Utente per ID</h1>
+    <h1>Aggiorna Utente</h1>
 
-    <form action="" method="GET">
-        <label for="id">Inserisci ID dell'utente:</label>
-        <input type="number" id="id" name="id" required>
-        <button type="submit">Cerca</button>
+    <form action="" method="POST">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        <br>
+        <label for="cognome">Cognome:</label>
+        <input type="text" id="cognome" name="cognome" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <button type="submit">Invia</button>
     </form>
-
-    <?php if ($user): ?>
-        <h2>Dettagli Utente</h2>
-        <p><b>ID:</b> <?= htmlentities($user->id) ?></p>
-        <p><b>Nome:</b> <?= htmlentities($user->nome) ?></p>
-        <p><b>Cognome:</b> <?= htmlentities($user->cognome) ?></p>
-        <p><b>Email:</b> <?= htmlentities($user->email) ?></p>
-    <?php elseif ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])): ?>
-        <p>Utente non trovato.</p>
-    <?php endif; ?>
 </body>
 </html>
