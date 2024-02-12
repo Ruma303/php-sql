@@ -1,38 +1,37 @@
 <?php
 
 //% Esempio semplice
+// /* require './connect.php'; // Importare lo script di connessione al DB
 
-/* require './connect.php'; // Importare lo script di connessione al DB
+// if ($_SERVER["REQUEST_METHOD"] == "POST") { //? Controllare il metodo HTTP
+//     $nome = $_POST['nome'];
+//     $cognome = $_POST['cognome'];
+//     $email = $_POST['email'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") { //? Controllare il metodo HTTP
-    $nome = $_POST['nome'];
-    $cognome = $_POST['cognome'];
-    $email = $_POST['email'];
+//     try {
+//         //? Query di inserimento dati con prepared statements
+//         $sql = "INSERT INTO utenti (nome, cognome, email) VALUES (:nome, :cognome, :email);";
+//         $stmt = $conn->prepare($sql);
 
-    try {
-        //? Query di inserimento dati con prepared statements
-        $sql = "INSERT INTO utenti (nome, cognome, email) VALUES (:nome, :cognome, :email);";
-        $stmt = $conn->prepare($sql);
+//         //? Binding dei parametri
+//         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
+//         $stmt->bindParam(':cognome', $cognome, PDO::PARAM_STR);
+//         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
 
-        //? Binding dei parametri
-        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
-        $stmt->bindParam(':cognome', $cognome, PDO::PARAM_STR);
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+//         //? Esecuzione della query
+//         $stmt->execute();
 
-        //? Esecuzione della query
-        $stmt->execute();
+//         echo "Dati inseriti con successo.";
+//     } catch (PDOException $e) {
 
-        echo "Dati inseriti con successo.";
-    } catch (PDOException $e) {
-
-        //! Gestione dell'errore
-        echo "Errore nell'inserimento dei dati: " . $e->getMessage();
-    }
-} else {
-    echo "Metodo di richiesta non valido.";
-}
+//         //! Gestione dell'errore
+//         echo "Errore nell'inserimento dei dati: " . $e->getMessage();
+//     }
+// } else {
+//     echo "Metodo di richiesta non valido.";
+// } */
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -59,11 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //? Controllare il metodo HTTP
 </form>
 
 </body>
-</html>
-*/
+</html> -->
 
 
 
+<?php
 
 //% Esempio sicuro
     session_start(); //* Avvia la sessione
@@ -125,6 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //? Controllare il metodo HTTP
 
             //* Imposta il messaggio di successo nella sessione
             $_SESSION['created'] = "Utente creato con successo.";
+
             //* Reindirizza alla stessa pagina per evitare la ripetizione del form submission
             header('Location: ' . $_SERVER['PHP_SELF']);
             exit;

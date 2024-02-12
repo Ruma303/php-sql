@@ -2,33 +2,33 @@
 
 //% Aggiornare un singolo utente
 
-    require './connect.php';
-    $id = 1;
+require './connect.php';
+$id = 1;
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $nome = $_POST['nome'] ?? '';
-        $cognome = $_POST['cognome'] ?? '';
-        $email = $_POST['email'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nome = $_POST['nome'] ?? '';
+    $cognome = $_POST['cognome'] ?? '';
+    $email = $_POST['email'] ?? '';
 
-        try {
-            //? Preparazione query SQL di aggiornamento
-            $sql = "UPDATE utenti SET nome = :nome, cognome = :cognome, email = :email WHERE id = :id";
+    try {
+        //? Preparazione query SQL di aggiornamento
+        $sql = "UPDATE utenti SET nome = :nome, cognome = :cognome, email = :email WHERE id = :id";
 
-            $stmt = $conn->prepare($sql);
+        $stmt = $conn->prepare($sql);
 
-            //? Associazione dei valori ai parametri
-            $stmt->bindParam(':nome', $nome);
-            $stmt->bindParam(':cognome', $cognome);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        //? Associazione dei valori ai parametri
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':cognome', $cognome);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-            $stmt->execute();
-            echo "<p>Utente aggiornato con successo!</p>";
+        $stmt->execute();
+        echo "<p>Utente aggiornato con successo!</p>";
 
-        } catch (PDOException $e) {
-            echo "Errore nell'aggiornamento dell'utente: " . $e->getMessage();
-        }
-    }?>
+    } catch (PDOException $e) {
+        echo "Errore nell'aggiornamento dell'utente: " . $e->getMessage();
+    }
+}?>
 
 <!DOCTYPE html>
 <html lang="it">

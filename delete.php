@@ -34,10 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Elimina Utente 1</title>
 </head>
 <body>
-    <h1>Elimina Utente 1</h1>
-
     <form action="" method="POST">
-        <button type="submit">Elimina Utente 1</button>
+        <button type="submit">Elimina Utente <?= $id ?></button>
     </form>
 </body>
 </html>

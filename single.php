@@ -4,7 +4,7 @@
 
 require './connect.php';
 
-$id = 1;
+$id = 10;
 
 try {
     //? Preparazione della query SQL con un parametro
